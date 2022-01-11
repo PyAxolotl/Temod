@@ -1,4 +1,4 @@
-from temod.core.base.attribute import *
+from Temod.core.base.attribute import *
 
 import base64
 

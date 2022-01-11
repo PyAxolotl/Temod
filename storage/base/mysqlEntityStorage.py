@@ -1,7 +1,7 @@
-from temod.core.base.attribute import Attribute
-from temod.core.base.condition import Condition
-from temod.core.base.relation import Relation
-from temod.core.base.entity import Entity
+from Temod.core.base.attribute import Attribute
+from Temod.core.base.condition import Condition
+from Temod.core.base.relation import Relation
+from Temod.core.base.entity import Entity
 
 from .mysqlAttributesTranslator import MysqlAttributesTranslator
 from .mysqlConditionsTranslator import MysqlConditionsTranslator

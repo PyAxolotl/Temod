@@ -1,4 +1,4 @@
-from temod.core.base.condition import *
+from Temod.core.base.condition import *
 from .mysqlAttributesTranslator import MysqlAttributesTranslator
 
 

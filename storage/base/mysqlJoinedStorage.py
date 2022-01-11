@@ -3,10 +3,10 @@ from .mysqlConditionsTranslator import MysqlConditionsTranslator
 from .mysqlEntityStorage import EntityQueringException
 from .mysqlStorage import MysqlStorage
 
-from temod.core.base.attribute import Attribute
-from temod.core.base.condition import Condition
-from temod.core.base.entity import Entity
-from temod.core.base.join import Join
+from Temod.core.base.attribute import Attribute
+from Temod.core.base.condition import Condition
+from Temod.core.base.entity import Entity
+from Temod.core.base.join import Join
 
 #############################################
 
