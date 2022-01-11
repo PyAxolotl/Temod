@@ -25,7 +25,7 @@ The Mysql Translator does the following matching:
 - Join -> Table Join
 
 ## Hello Temod
-Let's say that we have a program that analysis and stores press articles.
+Let's say that we have a program that analyses and stores press articles.
 For the sake of the example, let's say that we divide the article object in two parts:
 * The headers: contains the title, the source and the publish date of the article
 * The corpus: contains the content of the article.
