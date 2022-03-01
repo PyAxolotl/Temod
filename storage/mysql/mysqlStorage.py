@@ -54,10 +54,10 @@ class MysqlStorage():
 			query += f' WHERE {condition}'
 		if orderby is not None:
 			query += f' ORDER BY {orderby}'
-		if skip is not None:
-			query += f' SKIP {skip}'
 		if limit is not None:
 			query += f' LIMIT {limit}'
+			if skip is not None:
+				query += f' OFFSET {skip}'
 		for row in self.getMany(query):
 			yield row
 	

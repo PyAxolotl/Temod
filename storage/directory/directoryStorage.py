@@ -1,10 +1,14 @@
 import ntpath
 import os
 
+
+
 class DirectoryStorageException(Exception):
 	"""docstring for DirectoryStorageException"""
 	def __init__(self, *args, **kwargs):
 		super(DirectoryStorageException, self).__init__(*args, **kwargs)
+
+
 
 class DirectoryStorage(object):
 	"""docstring for DirectoryStorage"""
@@ -21,16 +25,22 @@ class DirectoryStorage(object):
 		self.mode = mode
 		self.encoding = encoding
 
-	def subStorage(self, dirname, createDir=False,mode=None):
-		mode = self.mode if mode is None else mode
-		return DirectoryStorage(os.path.join(self.directory,dirname),mode=mode,createDir=createDir)
+	######################################################################
 
-	def subStorages(self,mode=None):
+	def subStorage(self, dirname, *args, createDir=False,mode=None,as_=None,**kwargs):
 		mode = self.mode if mode is None else mode
+		storageType = type(self) if as_ is None else as_
+		return storageType(os.path.join(self.directory,dirname),*args,mode=mode,createDir=createDir,**kwargs)
+
+	def subStorages(self,*args,mode=None,as_=None,**kwargs):
+		mode = self.mode if mode is None else mode
+		storageType = type(self) if as_ is None else as_
 		for dirname in os.listdir(self.directory):
 			path = os.path.join(self.directory,dirname)
 			if os.path.isdir(path):
-				yield DirectoryStorage(path,mode=self.mode,createDir=False)
+				yield storageType(path,*args,mode=self.mode,createDir=False,**kwargs)
+
+	######################################################################
 
 	def content(self,only_files=False):
 		for file in os.listdir(self.directory):
@@ -40,6 +50,8 @@ class DirectoryStorage(object):
 
 	def has(self,file):
 		return file in os.listdir(self.directory)
+
+	######################################################################
 
 	def rename(self,old,new):
 		os.rename(os.path.join(self.directory,old),os.path.join(self.directory,new))
@@ -65,8 +77,11 @@ class DirectoryStorage(object):
 	def write(self,file,content,mode=None,encoding=None):
 		encoding = self.encoding if encoding is None else encoding
 		mode = self.mode if mode is None else mode
-		with open(os.path.join(self.directory,file),"w"+mode,encoding=encoding) as stream:
+		kwargs = {} if mode == "b" else {'encoding':encoding}
+		with open(os.path.join(self.directory,file),"w"+mode,**kwargs) as stream:
 			stream.write(content)
+
+	######################################################################
 
 	def close(self):
 		pass

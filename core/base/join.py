@@ -29,6 +29,11 @@ class Join(object):
 			pass
 		return super(Join,self).__getattribute__(name)
 
+	def to_dict(self):
+		return {
+			name:entity.to_dict() for name,entity in self.entities.items()
+		}
+
 
 
 		
