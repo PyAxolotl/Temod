@@ -78,8 +78,10 @@ class DirectoryStorage(object):
 		encoding = self.encoding if encoding is None else encoding
 		mode = self.mode if mode is None else mode
 		kwargs = {} if mode == "b" else {'encoding':encoding}
-		with open(os.path.join(self.directory,file),"w"+mode,**kwargs) as stream:
+		path = os.path.join(self.directory,file)
+		with open(path,"w"+mode,**kwargs) as stream:
 			stream.write(content)
+		return path
 
 	######################################################################
 
