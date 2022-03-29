@@ -62,7 +62,7 @@ class UUID4Attribute(StringAttribute):
 		if self.value is not None:
 			try:
 				assert(len(self.value) == 36)
-				assert(all([c in BASE16_ALPHABET for c in self.value.lower()]))
+				assert(all([c in BASE16_ALPHABET+'-' for c in self.value.lower()]))
 				lens = [len(o) for o in self.value.split('-')]
 				assert(lens.count(4) == 3 and set(lens) == {8,4,12})
 			except AssertionError: 
