@@ -20,25 +20,29 @@ class MysqlConditionsTranslator(object):
 		return f"{attribute.owner_name}.{attribute.name}"
 
 	def translate(self,condition):
-		print(condition)
 		if type(condition) is And:
 			return self.translate_and(condition)
-		if type(condition) is Or:
+		elif type(condition) is Or:
 			return self.translate_or(condition)
+		elif type(condition) is Not:
+			return self.translate_not(condition)
 		elif type(condition) is Equals:
 			return self.translate_equals(condition)
-		if type(condition) is StartsWith:
+		elif type(condition) is StartsWith:
 			return self.translate_startswith(condition)
 		elif type(condition) is In:
 			return self.translate_in(condition)
 		else:
-			raise MysqlConditionException(f"Can't translate condition of type {type(attribute).__name__}")
+			raise MysqlConditionException(f"Can't translate condition of type {type(condition).__name__}")
 
 	def translate_and(self,condition):
 		return " and ".join(["("+self.translate(sub_condition)+")" for sub_condition in condition.conditions])
 
 	def translate_or(self,condition):
 		return " or ".join(["("+self.translate(sub_condition)+")" for sub_condition in condition.conditions])
+
+	def translate_not(self,condition):
+		return f" not ({self.translate(condition.condition)})"
 
 	def translate_startswith(self,condition):
 		if condition.case_sensitive:

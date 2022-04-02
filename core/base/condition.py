@@ -10,6 +10,16 @@ class Condition(object):
 	def __init__(self):
 		super(Condition, self).__init__()
 
+class Not(Condition):
+	"""docstring for Not"""
+	def __init__(self,condition,**kwargs):
+		super(Not, self).__init__(**kwargs)
+		try:
+			assert(issubclass(type(condition),Condition))
+		except AssertionError:
+			raise MalformedConditionException("condition must be a subclass of Condition")
+		self.condition = condition
+
 class And(Condition):
 	"""docstring for And"""
 	def __init__(self,*conditions,**kwargs):
