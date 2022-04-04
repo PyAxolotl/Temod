@@ -72,6 +72,18 @@ class MysqlEntityStorage(MysqlStorage):
 
 	##############################################
 
+	# VALUES GENERATION
+
+	def generate_unused_value(self,attribute):
+		attribute.value = type(attribute).generate_random_value()
+		while self.get(attribute) is not None:
+			attribute.value = type(attribute).generate_random_value()
+		return attribute
+
+	##############################################
+
+	##############################################
+
 	# SINGLE TABLE & ROWS OPERATIONS
 
 	def get(self,*ids):
