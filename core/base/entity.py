@@ -20,7 +20,11 @@ class Entity(object):
 	#####################################################
 
 	def setAttribute(self,attribute,value):
-		self.attributes[attribute].value = value
+		self.attributes[attribute].set_value(value)
+
+	def setAttributes(self,**kwargs):
+		for k,v in kwargs.items():
+			self.attributes[k].set_value(v)
 
 	def __getattribute__(self,name): 
 		try:
@@ -39,6 +43,16 @@ class Entity(object):
 		}
 		return self
 
+	#####################################################
+
+	def to_dict(self):
+		return {
+			name:attr.to_scalar()
+			for name,attr in self.attributes.items()
+		}
+
 	def __repr__(self):
 		attributes = [f"{attr.name} ({type(attr).__name__}): {attr.value} ({type(attr.value).__name__})" for attr in self.attributes.values()]
 		return f"""Entity {self.ENTITY_NAME}"""+((":\n\t"+"\n\t".join(attributes)) if len(self.attributes) > 0 else "")
+
+	#####################################################

@@ -46,10 +46,20 @@ class StringAttribute(Attribute):
 		if force_lower_case:
 			self.value = self.value.lower() if self.value is not None else self.value
 
+	def set_value(self,value):
+		self.value = value
+		self.check_value()
+		if force_lower_case:
+			self.value = self.value.lower() if self.value is not None else self.value
+
 	def check_value(self):
 		super(StringAttribute,self).check_value()
 		if self.non_empty and (self.value == "" or self.value == None):
 			raise AttributeValueException("Value of non empty StringAttribute set to null or empty str")
+
+	def to_scalar(self):
+		return self.value
+
 
 class UUID4Attribute(StringAttribute):
 	"""docstring for UUID4Attribute"""
@@ -68,6 +78,10 @@ class UUID4Attribute(StringAttribute):
 			except AssertionError: 
 				raise AttributeValueException("Wrong str format for UUID4Attribute")
 
+	def set_value(self,value):
+		self.value = value
+		self.check_value()
+
 	def generate_random_value():
 		return str(uuid.uuid4())
 
@@ -77,6 +91,10 @@ class UTF8BASE64Attribute(StringAttribute):
 	def __init__(self, *args, **kwargs):
 		kwargs['force_cast'] = kwargs.get('force_cast',lambda x:UTF8BASE64Attribute.decode(x))
 		super(UTF8BASE64Attribute, self).__init__(*args, **kwargs)
+		self.check_value()
+
+	def set_value(self,value):
+		self.value = value
 		self.check_value()
 
 	def decode(x):
@@ -92,12 +110,28 @@ class IntegerAttribute(Attribute):
 		super(IntegerAttribute, self).__init__(name,int,**kwargs)
 		self.check_value()
 
+	def set_value(self,value):
+		self.value = value
+		self.check_value()
+
+	def to_scalar(self):
+		return self.value
+
+
 class RealAttribute(Attribute):
 	"""docstring for RealAttribute"""
 	def __init__(self, name, **kwargs):
 		kwargs['force_cast'] = kwargs.get('force_cast',float)
 		super(RealAttribute, self).__init__(name,float,**kwargs)
 		self.check_value()
+
+	def set_value(self,value):
+		self.value = value
+		self.check_value()
+
+	def to_scalar(self):
+		return self.value
+
 
 class BooleanAttribute(Attribute):
 	"""docstring for BooleanAttribute"""
@@ -106,14 +140,37 @@ class BooleanAttribute(Attribute):
 		super(BooleanAttribute, self).__init__(name,bool,**kwargs)
 		self.check_value()
 
+	def set_value(self,value):
+		self.value = value
+		self.check_value()
+
+	def to_scalar(self):
+		return self.value
+
+
 class DateAttribute(Attribute):
 	"""docstring for DateAttribute"""
 	def __init__(self, name, **kwargs):
 		super(DateAttribute, self).__init__(name,date,**kwargs)
 		self.check_value()
 
+	def set_value(self,value):
+		self.value = value
+		self.check_value()
+
+	def to_scalar(self):
+		return self.value.strftime("%d/%m/%Y")
+
+
 class DateTimeAttribute(Attribute):
 	"""docstring for DateTimeAttribute"""
 	def __init__(self, name, **kwargs):
 		super(DateTimeAttribute, self).__init__(name,datetime,**kwargs)
 		self.check_value()
+
+	def set_value(self,value):
+		self.value = value
+		self.check_value()
+
+	def to_scalar(self):
+		return self.value.strftime("%d/%m/%Y %H:%M:%S")
