@@ -15,7 +15,6 @@ class MysqlStorage():
 		self.connexion.close()
 
 	def executeAndCommit(self,query):
-		print("Executing query: ",query)
 		cursor = self.connexion.cursor()
 		try:
 			cursor.execute(query)
@@ -25,7 +24,6 @@ class MysqlStorage():
 		return cursor
 
 	def getOne(self,query):
-		print("Fetch one: ",query)
 		cursor=self.connexion.cursor()
 		try:
 			query=(query)
@@ -38,7 +36,6 @@ class MysqlStorage():
 			return {col:result[i] for i,col in enumerate(columns)}
 
 	def getMany(self,query):
-		print("Fetch Many: ",query)
 		cursor=self.connexion.cursor()
 		try:
 			cursor.execute(query)

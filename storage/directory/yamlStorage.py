@@ -16,10 +16,8 @@ class YamlStorage(DirectoryStorage):
 		return yaml.safe_load(self.read(id_,encoding=encoding if not encoding is None else self.encoding))
 
 	def list(self, skip=None, limit=None):
-		print('fetching files in ',self.directory)
 		nb = -1; sent = 0;
 		for file in self.content(only_files=True):
-			print('file found ',file)
 			nb += 1
 			if skip is not None and nb <= skip:
 				continue
