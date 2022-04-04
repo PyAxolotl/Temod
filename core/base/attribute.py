@@ -159,7 +159,7 @@ class DateAttribute(Attribute):
 		self.check_value()
 
 	def to_scalar(self):
-		return self.value.strftime("%d/%m/%Y")
+		return self.value.isoformat()
 
 
 class DateTimeAttribute(Attribute):
@@ -173,4 +173,4 @@ class DateTimeAttribute(Attribute):
 		self.check_value()
 
 	def to_scalar(self):
-		return self.value.strftime("%d/%m/%Y %H:%M:%S")
+		return self.value.isoformat()
