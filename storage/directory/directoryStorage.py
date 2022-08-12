@@ -46,7 +46,7 @@ class DirectoryStorage(object):
 		for file in os.listdir(self.directory):
 			path = os.path.join(self.directory,file)
 			if not only_files or os.path.isfile(path):
-				yield file
+				yield file 
 
 	def has(self,file):
 		return file in os.listdir(self.directory)
@@ -55,6 +55,19 @@ class DirectoryStorage(object):
 
 	def rename(self,old,new):
 		os.rename(os.path.join(self.directory,old),os.path.join(self.directory,new))
+
+	def moveToStorage(self,file,storage):
+		if not issubclass(type(storage),DirectoryStorage):
+			raise DirectoryStorageException("Can only move to another Directory Storage")
+		os.rename(os.path.join(self.directory,old),os.path.join(storage.directory,new))
+
+	def copyToStorage(self,file,storage):
+		if not issubclass(type(storage),DirectoryStorage):
+			raise DirectoryStorageException("Can only copy to another Directory Storage")
+		with open(file,"r"+self.mode) as stream:
+			storage.write(file,stream.read(),mode=self.mode)
+
+	######################################################################
 
 	def read(self,file,mode=None,encoding=None):
 		mode = self.mode if mode is None else mode
