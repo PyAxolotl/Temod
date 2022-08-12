@@ -64,8 +64,9 @@ class DirectoryStorage(object):
 	def copyToStorage(self,file,storage):
 		if not issubclass(type(storage),DirectoryStorage):
 			raise DirectoryStorageException("Can only copy to another Directory Storage")
-		with open(file,"r"+self.mode) as stream:
-			storage.write(file,stream.read(),mode=self.mode)
+		mode = self.mode if mode is None else mode
+		encoding = self.encoding if encoding is None else encoding
+		storage.write(file,self.read(file,mode=mode,encoding=encoding),mode=mode,encoding=encoding)
 
 	######################################################################
 
