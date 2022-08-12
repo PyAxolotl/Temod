@@ -73,8 +73,11 @@ class DirectoryStorage(object):
 	def read(self,file,mode=None,encoding=None):
 		mode = self.mode if mode is None else mode
 		encoding = self.encoding if encoding is None else encoding
+		kwargs = {}
+		if mode != "b":
+			kwargs = {"encoding":encoding}
 		try:
-			with open(os.path.join(self.directory,file),"r"+mode,encoding=encoding) as stream:
+			with open(os.path.join(self.directory,file),"r"+mode,**kwargs) as stream:
 				content = stream.read()
 			return content
 		except FileNotFoundError:
