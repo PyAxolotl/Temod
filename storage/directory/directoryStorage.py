@@ -61,7 +61,7 @@ class DirectoryStorage(object):
 			raise DirectoryStorageException("Can only move to another Directory Storage")
 		os.rename(os.path.join(self.directory,old),os.path.join(storage.directory,new))
 
-	def copyToStorage(self,file,storage):
+	def copyToStorage(self,file,storage,mode=None,encoding=None):
 		if not issubclass(type(storage),DirectoryStorage):
 			raise DirectoryStorageException("Can only copy to another Directory Storage")
 		mode = self.mode if mode is None else mode
