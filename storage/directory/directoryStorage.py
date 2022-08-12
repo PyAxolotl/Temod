@@ -76,6 +76,7 @@ class DirectoryStorage(object):
 		kwargs = {}
 		if mode != "b":
 			kwargs = {"encoding":encoding}
+		print('mode is',mode)
 		try:
 			with open(os.path.join(self.directory,file),"r"+mode,**kwargs) as stream:
 				content = stream.read()
