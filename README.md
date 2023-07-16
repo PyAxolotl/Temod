@@ -1,5 +1,5 @@
 # Temod
-Temod is a python library designed to augment the portability of python program using database.
+Temod is a python library designed to augment the portability of python program using database. From now on, this package will be maintained here [https://github.com/TuburboMajus/temod](https://github.com/TuburboMajus/temod).
 
 ## Intro
 Temod adds a new layer of abstraction to your programs in which common databases' notions are defined such as:
